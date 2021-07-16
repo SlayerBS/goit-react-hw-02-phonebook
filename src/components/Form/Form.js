@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { v4 as uuidv4 } from "uuid";
 class Form extends Component {
   state = {
     name: "",
@@ -13,8 +13,8 @@ class Form extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(this.state);
-    this.props.onSubmit(this.state);
+    const { name, number } = this.state;
+    this.props.onSubmit({ id: uuidv4(), name, number });
     this.reset();
   };
 
