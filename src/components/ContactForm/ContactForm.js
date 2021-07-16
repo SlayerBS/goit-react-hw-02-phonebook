@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
-class Form extends Component {
+class ContactForm extends Component {
   state = {
     name: "",
     number: "",
@@ -57,4 +57,4 @@ class Form extends Component {
     );
   }
 }
-export default Form;
+export default ContactForm;

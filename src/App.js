@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Contacts from "./components/Contacts";
+import ContactList from "./components/ContactList";
 
 import Container from "./components/Container";
-import Form from "./components/Form/Form";
+import Filter from "./components/Filter";
+import ContactForm from "./components/ContactForm";
 import Section from "./components/Section";
 
 class App extends Component {
@@ -13,23 +14,50 @@ class App extends Component {
       { id: "id-3", name: "Eden Clements", number: "645-17-79" },
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
+    filter: "",
   };
 
   formSubmitHundler = (data) => {
+    if (this.state.contacts.find((contact) => contact.name === data.name)) {
+      alert(
+        `${data.name} is already in contacts with contact number ${data.number} `
+      );
+      return;
+    }
     this.setState(({ contacts }) => ({ contacts: [data, ...contacts] }));
     console.log("Contacts", this.state.contacts);
   };
 
+  handleFilter = (filter) => this.setState({ filter });
+
+  deleteContact = (deletedId) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter(
+        (contact) => contact.id !== deletedId
+      ),
+    }));
+  };
+
+  filteredContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   render() {
-    const { contacts } = this.state;
-    console.log(contacts);
+    const filteredContacts = this.filteredContacts();
     return (
       <Container>
         <Section title="Phonebook">
-          <Form onSubmit={this.formSubmitHundler} />
+          <ContactForm onSubmit={this.formSubmitHundler} />
         </Section>
         <Section title="Contacts">
-          <Contacts contacts={contacts} />
+          <Filter filter={this.state.filter} onChange={this.handleFilter} />
+          <ContactList
+            contacts={filteredContacts}
+            onDelete={this.deleteContact}
+          />
         </Section>
       </Container>
     );
