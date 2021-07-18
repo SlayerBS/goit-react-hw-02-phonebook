@@ -4,15 +4,18 @@ import styles from "./Filter.module.css";
 
 const Filter = ({ filter, onChange }) => {
   return (
-    <input
-      type="text"
-      value={filter}
-      onChange={({ target }) => onChange(target.value)}
-      name="filter"
-      title=""
-      required
-      className={styles.input}
-    />
+    <>
+      <h3>Find contacts by name</h3>
+      <input
+        type="text"
+        value={filter}
+        onChange={({ target }) => onChange(target.value)}
+        name="filter"
+        title=""
+        required
+        className={styles.input}
+      />
+    </>
   );
 };
 
